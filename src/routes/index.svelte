@@ -1,22 +1,42 @@
+<script context="module">
+    export async function load({ fetch }){
+        const res = await fetch('https://jsonplaceholder.typicode.com/posts')
+        const guides = await res.json();
+
+        if (res.ok){
+            return {
+                props: {
+                    guides
+                }
+            }
+        }
+
+        return {
+            status: res.status,
+            error: new Error('Could not fetch the guides.')
+        }
+    }
+</script>
+    
 <script>
+    export let guides;
    /*
    https://netninja.dev/courses/sveltekit-tutorial/lectures/36982375
    */
 </script>
 
 
-<div class="index">
-    <h2>Welcome</h2>
-    <div>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Neque dignissimos eligendi, odio molestias explicabo nulla, iusto debitis quam fugiat similique dolores libero impedit, tempora maxime! In, dignissimos. Totam, dolores similique. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aut, tempora recusandae. Ducimus, cum. Nostrum, perspiciatis inventore repellat libero rem ut voluptate dicta porro quos facere eveniet recusandae, ad, sint sed. Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, error aliquid soluta quasi voluptatem, perferendis explicabo esse quia reprehenderit illum maxime sequi in doloribus! Quam adipisci ad debitis animi nesciunt. Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam dolores dolor aspernatur? Delectus cupiditate atque expedita magni obcaecati tempora esse. Quo vel suscipit ad, ut voluptas voluptates sed accusamus quae.
-    </div>
-    <a href="/guides">View Guides</a>
-    <a href="/about">About</a>
-  
+<div class="guides">
+    {#each guides as guide}
+    <li>
+        <a href="/">{guide.title}</a>
+    </li>
+    {/each}
 
 </div>
 
 <style>
-    .index {
+    .guides {
         text-align: center;
         display: block;
         margin: 20px auto;
